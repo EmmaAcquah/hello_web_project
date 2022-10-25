@@ -10,8 +10,6 @@ describe Application do
   # class so our tests work.
   let(:app) { Application.new }
 
-
-
   context "GET /names" do
     it "returns 200 OK with a string of 3 names" do
       # Send a GET request to /
@@ -23,15 +21,25 @@ describe Application do
     end
 
     it "returns 200 OK with 1 name" do
-        # Send a GET request to /
-        # and returns a response object we can test.
-        response = get('/names?name=Esme')
-        # Assert the response status code and body.
-        expect(response.status).to eq 200
-        expect(response.body).to eq 'Esme'
-      end
+      response = get('/names?name=Esme')
+      expect(response.status).to eq 200
+      expect(response.body).to eq 'Esme'
+    end
+  end
+
+  context "POST /sort-names" do
+    it 'returns 200 OK and sorts given names in ascending order' do
+      response = post('/sort-names', names: 'Sarah,Robert,Anna')
+    
+      expect(response.status).to eq 200
+      expect(response.body).to eq 'Anna,Robert,Sarah'
     end
 
+    it 'returns 200 OK and sorts given names in ascending order' do
+      response = post('/sort-names', names: 'Joe,Alice,Zoe,Julia,Kieran')
 
-
+      expect(response.status).to eq 200
+      expect(response.body).to eq 'Alice,Joe,Julia,Kieran,Zoe'
+    end
+  end
 end
