@@ -23,29 +23,34 @@ class Application < Sinatra::Base
   end
 
   get '/hello' do
-    name = params[:name]
-    return "Hello #{name}"
+    @name = params[:name] #sets an instance variable in the HTTP route block
+    #return "Hello #{name}"
+    return erb(:index)
+    # The process is then the following:
+    # 1. Ruby reads the .erb view file
+    # 2. It looks for any ERB tags and replaces it by their final value
+    # 3. The final generated HTML is sent in the response
   end
 
-  #get '/posts' do
-  #  return "A list of posts"
-  #end
+  get '/posts' do
+    return "A list of posts"
+  end
 
   get '/names' do
     names = params[:name]
     return names
   end
 
-    post '/submit' do
-        name = params[:name]
-        message = params[:message]
-        return "Thanks #{name}, you sent this message: '#{message}'"
-    end
+  post '/submit' do
+    name = params[:name]
+    message = params[:message]
+    return "Thanks #{name}, you sent this message: '#{message}'"
+  end
 
-    post '/sort-names' do
-      names = params[:names]
-      separated_names = names.split(",")
-      return separated_names.sort.join(",")
-    end
+  post '/sort-names' do
+    names = params[:names]
+    separated_names = names.split(",")
+    return separated_names.sort.join(",")
+  end
 
 end
